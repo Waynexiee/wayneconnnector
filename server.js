@@ -4,17 +4,27 @@ const mongoose = require("mongoose");
 const users = require("./routes/api/users");
 const profiles = require("./routes/api/profiles");
 const posts = require("./routes/api/posts");
+const bodyParser = require("body-parser");
+const passport = require("passport");
 
 const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 db = require("./config/keys").mongoURI;
 
 mongoose
-  .connect(db)
+  .connect(
+    db,
+    { useNewUrlParser: true }
+  )
   .then(() => console.log("Mongodb connected"))
   .catch(err => console.log(err));
 
-app.get("/", (req, res) => res.send("hlo"));
+app.use(passport.initialize());
+
+require("./config/passport")(passport);
 
 app.use("/api/users", users);
 app.use("/api/profiles", profiles);
