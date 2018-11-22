@@ -5,22 +5,13 @@ module.exports = function validatePostInput(data) {
   let errors = {};
 
   data.text = !isEmpty(data.text) ? data.text : "";
-  data.password = !isEmpty(data.password) ? data.password : "";
 
   if (!Validator.isLength(data.text, { min: 10, max: 300 })) {
-    errors.name = "Text must be bewtween 10 and 300 charactors.";
+    errors.text = "Post must be between 10 and 300 characters";
   }
 
   if (Validator.isEmpty(data.text)) {
-    errors.text = "Text must not be empty.";
-  }
-
-  if (!Validator.isEmail(data.email)) {
-    errors.email = "Email is not valid.";
-  }
-
-  if (Validator.isEmpty(data.password)) {
-    errors.password = "Password must not be empty.";
+    errors.text = "Text field is required";
   }
 
   return {

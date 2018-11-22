@@ -13,7 +13,7 @@ module.exports = function validateEducationInput(data) {
     errors.school = "School must not be empty.";
   }
 
-  if (!Validator.isEmail(data.degree)) {
+  if (Validator.isEmpty(data.degree)) {
     errors.degree = "Degree must not be empty.";
   }
 

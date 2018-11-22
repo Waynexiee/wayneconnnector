@@ -22,7 +22,7 @@ router.post(
     if (!isValid) {
       return res.status(400).json(errors);
     }
-
+    console.log(req.body);
     const newPost = new Post({
       text: req.body.text,
       name: req.body.name,
@@ -46,8 +46,8 @@ router.get("/", (req, res) => {
 // @route   GET api/posts/:id
 // @desc    Get posts routes
 // @access  Public
-router.get("/", (req, res) => {
-  Post.findById(req.param.id)
+router.get("/:id", (req, res) => {
+  Post.findById(req.params.id)
     .then(post => res.json(post))
     .catch(err => res.status(404).json({ nopost: "No post found" }));
 });
@@ -56,7 +56,7 @@ router.get("/", (req, res) => {
 // @desc    Delete posts routes
 // @access  Private
 router.delete(
-  "/",
+  "/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Profile.findOne({ user: req.user.id }).then(profile => {

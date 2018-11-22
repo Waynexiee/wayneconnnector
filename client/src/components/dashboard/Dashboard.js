@@ -23,7 +23,7 @@ class Dashboard extends Component {
 
     let dashboardContent;
 
-    if (profile === null || loading) {
+    if (profile === null || profile === undefined || loading) {
       dashboardContent = <Spinner />;
     } else {
       // Check if logged in user has profile data
@@ -31,7 +31,8 @@ class Dashboard extends Component {
         dashboardContent = (
           <div>
             <p className="lead text-muted">
-              Welcome <Link to={`/profile/${profile.handle}`}>{user.name}</Link>
+              Welcome{" "}
+              <Link to={`/profiles/${profile.handle}`}>{user.name}</Link>
             </p>
             <ProfileActions />
             <Experience experience={profile.experience} />

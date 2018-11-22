@@ -143,7 +143,7 @@ router.post(
 
 // @route   POST api/profiles/experience
 // @desc    Add user's experience to profile
-// @access  Public
+// @access  Private
 router.post(
   "/experience",
   passport.authenticate("jwt", { session: false }),
@@ -152,18 +152,22 @@ router.post(
     if (!isValid) {
       return res.status(400).json(errors);
     }
-    const newExp = {
-      title: req.body.title,
-      company: req.body.company,
-      location: req.body.location,
-      from: req.body.from,
-      to: req.body.to,
-      current: req.body.current,
-      description: req.body.description
-    };
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      const newExp = {
+        title: req.body.title,
+        company: req.body.company,
+        location: req.body.location,
+        from: req.body.from,
+        to: req.body.to,
+        current: req.body.current,
+        description: req.body.description
+      };
 
-    profile.experience.unshift(newExp);
-    profile.save().then(profile => res.json(profile));
+      // Add to exp array
+      profile.experience.unshift(newExp);
+
+      profile.save().then(profile => res.json(profile));
+    });
   }
 );
 
@@ -178,18 +182,22 @@ router.post(
     if (!isValid) {
       return res.status(400).json(errors);
     }
-    const newEdu = {
-      school: req.body.school,
-      degree: req.body.degree,
-      fieldofstudy: req.body.fieldofstudy,
-      from: req.body.from,
-      to: req.body.to,
-      current: req.body.current,
-      description: req.body.description
-    };
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      const newEdu = {
+        school: req.body.school,
+        degree: req.body.degree,
+        fieldofstudy: req.body.fieldofstudy,
+        from: req.body.from,
+        to: req.body.to,
+        current: req.body.current,
+        description: req.body.description
+      };
 
-    profile.education.unshift(newEdu);
-    profile.save().then(profile => res.json(profile));
+      // Add to exp array
+      profile.education.unshift(newEdu);
+
+      profile.save().then(profile => res.json(profile));
+    });
   }
 );
 
@@ -231,7 +239,7 @@ router.delete(
   }
 );
 
-// @route   DELETE api/profile
+// @route   DELETE api/profiles
 // @desc    Delete user and profile
 // @access  Private
 router.delete(

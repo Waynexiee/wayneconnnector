@@ -30,7 +30,7 @@ module.exports = function validateRegisterInput(data) {
   }
 
   if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
-    errors.name = "Name must be bewtween 6 and 30 charactors.";
+    errors.password = "Password must be bewtween 6 and 30 charactors.";
   }
 
   if (Validator.isEmpty(data.password2)) {

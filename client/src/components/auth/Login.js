@@ -42,7 +42,7 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password
     };
-    this.loginUser(userData);
+    this.props.loginUser(userData);
   }
 
   render() {
@@ -83,6 +83,7 @@ class Login extends Component {
     );
   }
 }
+
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
